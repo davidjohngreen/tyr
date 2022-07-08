@@ -49,8 +49,8 @@ full_dataset <- full_dataset %>% mutate(TCA = case_when(haplotype == 'TCA' ~ 1))
 full_dataset <- full_dataset %>% mutate(TCG = case_when(haplotype == 'TCG' ~ 1)) %>% replace_na(list(TCG = 0))
 
 """subset for different analyses"""
-eur_dataset <- full_dataset %>% filter(ancestry == 'aaeur')
-eur_gel_dataset <- full_dataset %>% filter(ancestry == 'aaeur', cohort == 'GeL')
+eur_dataset <- full_dataset %>% filter(ancestry == 'eur')
+eur_gel_dataset <- full_dataset %>% filter(ancestry == 'eur', cohort == 'GeL')
 gel_dataset <- full_dataset %>% filter(cohort == 'GeL')
 
 """full_dataset ORs"""
