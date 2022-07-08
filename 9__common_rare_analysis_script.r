@@ -50,7 +50,7 @@ ratios_zero <- data.frame(ratios)
 
 
 
-"""get those with different combinations of common and rare"""
+"""get those with different combinations of common and rare, setting 0 common, 0 rare as the reference group"""
 test = final %>% mutate(common_rare = case_when(
                             common_TYR == 6 & additional == 0 ~ "6_common_0_rare",
                             common_TYR == 5 & additional == 0 ~ "5_common_0_rare",
@@ -80,6 +80,8 @@ ratios <- data.frame(exp(cbind(OR = coef(fit1),confint(fit1)))) %>% mutate_if(is
 ratios_common_rare <- data.frame(ratios)
 
 
+
+"""get those with different combinations of common and rare TYR variants, setting 0 common, 0 rare as the reference group"""
 test = test %>% mutate(common_rare_TYR = case_when(
                             common_TYR == 6 & additional_tyr == 1 ~ "6_common_1_rare_tyr",
                             common_TYR == 5 & additional_tyr == 1 ~ "5_common_1_rare_tyr",
