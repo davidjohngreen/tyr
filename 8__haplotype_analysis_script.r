@@ -54,17 +54,17 @@ eur_gel_dataset <- full_dataset %>% filter(ancestry == 'eur', cohort == 'GeL')
 gel_dataset <- full_dataset %>% filter(cohort == 'GeL')
 
 """full_dataset ORs"""
-fit1 <- logistf(data=full_dataset, albinism~haplotype+additional+ancestry+sex, firth=TRUE, pl=TRUE)
+fit1 <- logistf(data=full_dataset, albinism~CAA+additional+ancestry+sex, firth=TRUE, pl=TRUE)
 ORs_full_dataset <- data.frame(exp(cbind(OR = coef(fit1),confint(fit1)))) %>% mutate_if(is.numeric, round, digits = 2)
 
 """eur_dataset ORs"""
-fit2 <- logistf(data=eur_dataset, albinism~haplotype+additional+sex, firth=TRUE, pl=TRUE)
+fit2 <- logistf(data=eur_dataset, albinism~CAA+additional+sex, firth=TRUE, pl=TRUE)
 ORs_eur_dataset <- data.frame(exp(cbind(OR = coef(fit2),confint(fit2)))) %>% mutate_if(is.numeric, round, digits = 2)
 
 """eur_gel_dataset ORs"""
-fit3 <- logistf(data=eur_gel_dataset, albinism~haplotype+additional+sex, firth=TRUE, pl=TRUE)
+fit3 <- logistf(data=eur_gel_dataset, albinism~CAA+additional+sex, firth=TRUE, pl=TRUE)
 ORs_eur_gel_dataset <- data.frame(exp(cbind(OR = coef(fit3),confint(fit3)))) %>% mutate_if(is.numeric, round, digits = 2)
 
 """gel_dataset ORs"""
-fit4 <- logistf(data=gel_dataset, albinism~haplotype+additional+ancestry+sex, firth=TRUE, pl=TRUE)
+fit4 <- logistf(data=gel_dataset, albinism~CAA+additional+ancestry+sex, firth=TRUE, pl=TRUE)
 ORs_gel_dataset <- data.frame(exp(cbind(OR = coef(fit4),confint(fit4)))) %>% mutate_if(is.numeric, round, digits = 2)
