@@ -3,10 +3,10 @@ library(tidyverse)
 library(logistf)
 library(janitor)
 
-haplotypes = read.csv(file = 'haplotypes.csv', sep='\t',stringsAsFactors = T, header = T)
+haplotypes <- read.csv(file = 'haplotypes.csv', sep='\t',stringsAsFactors = T, header = T)
 
-sample_stats = read.csv(file = 'sample_stats.txt', header = T, stringsAsFactors = T, sep = '\t')
-sample_stats = sample_stats %>%
+sample_stats <- read.csv(file = 'sample_stats.txt', header = T, stringsAsFactors = T, sep = '\t')
+sample_stats <- sample_stats %>%
     select(Participant.Id, Platekey, Participant.Phenotypic.Sex,
             Pred.African.Ancestries, Pred.South.Asian.Ancestries,
             Pred.East.Asian.Ancestries, Pred.European.Ancestries,
@@ -20,15 +20,15 @@ sample_stats = sample_stats %>%
     rename(LPid = Platekey, participant_id=Participant.Id,sex=Participant.Phenotypic.Sex)
 
 
-combined = inner_join(haplotypes, sample_stats, by='LPid') %>%
+combined <- inner_join(haplotypes, sample_stats, by='LPid') %>%
           rename(plate_key = LPid)
-additional = read.csv('additional_alleles.csv', header=T, stringsAsFactors=T, sep='\t')
-combined = left_join(combined, additional, by='plate_key') %>%
+additional <- read.csv('additional_alleles.csv', header=T, stringsAsFactors=T, sep='\t')
+combined <- left_join(combined, additional, by='plate_key') %>%
           replace_na(list(additional = 0))
 
-albinism = read.csv(file = 'albinism_IDs.csv', stringsAsFactors = T, header = T, sep = '\t')
-albinism = albinism %>% rename(participant_id = partid)
-combined = left_join(combined, albinism, by="participant_id")
+albinism <- read.csv(file = 'albinism_IDs.csv', stringsAsFactors = T, header = T, sep = '\t')
+albinism <- albinism %>% rename(participant_id = partid)
+combined <- left_join(combined, albinism, by="participant_id")
 combined <- mutate(combined, albinism = ifelse(is.na(albinism), 0, albinism))
 combined <- mutate(combined, cohort = 'GeL')
 
@@ -36,9 +36,9 @@ common_count <- read.csv(file = 'recoded-status-by-ID.txt', stringsAsFactors = T
 common_count <- common_count %>% select('plate_key', 'common_TYR')
 testing <- left_join(combined, common_count, by='plate_key')
 
-french_cohort = read.csv(file = 'french_cohort_haplotypes.csv', header=T, stringsAsFactors = T, sep='\t')
+french_cohort <- read.csv(file = 'french_cohort_haplotypes.csv', header=T, stringsAsFactors = T, sep='\t')
 
-full_dataset = bind_rows(testing, french_cohort)
+full_dataset <- bind_rows(testing, french_cohort)
 full_dataset$additional <- as.factor(full_dataset$additional)
 
 full_dataset <- full_dataset %>% mutate(CAA = case_when(haplotype == 'CAA' ~ 1)) %>% replace_na(list(CAA = 0))
