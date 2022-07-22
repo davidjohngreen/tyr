@@ -1,6 +1,9 @@
+# recode the haplotypes to count the numeber of deleterious alleles
+# for the promotor (modifier) variant, we count REFs (as C is the lower expressing allele) and for the two missense changes we count ALTs
+
+
 file = open('status-by-ID.txt')
 output = open('recoded-status-by-ID.txt', 'w+')
-
 output.write('LPid\tmodifier\tsnp_192\tsnp_402\ttotal\n')
 
 
